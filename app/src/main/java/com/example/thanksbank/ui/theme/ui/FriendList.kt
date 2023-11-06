@@ -39,8 +39,8 @@ fun FriendListContent(toAddFriend: () -> Unit) {
                 modifier = Modifier
                     .padding(top = 16.dp, end = 16.dp),
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.White,
-                    contentColor = MaterialTheme.colors.primaryVariant
+                    backgroundColor = MaterialTheme.colors.secondary,
+                    contentColor = MaterialTheme.colors.onSecondary
                 ),
                 onClick = {
                     toAddFriend()
@@ -73,7 +73,7 @@ fun FriendListItem(progress: Int, onItemClick: () -> Unit) {
         modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth()
-            .background(Color.White, shape = RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colors.secondary, shape = RoundedCornerShape(8.dp))
             .padding(5.dp)
             .clickable(onClick = onItemClick)
     ) {
@@ -86,7 +86,7 @@ fun FriendListItem(progress: Int, onItemClick: () -> Unit) {
         ) {
             Text(
                 text = "Mount Rainer",
-                color = Color.Black
+                color = MaterialTheme.colors.onSecondary
             )
         }
         Box(
@@ -156,8 +156,8 @@ fun PreviewFriendList() {
                     modifier = Modifier
                         .padding(top = 16.dp, end = 16.dp),
                     colors = ButtonDefaults.buttonColors(
-                        backgroundColor = Color.White,
-                        contentColor = MaterialTheme.colors.primaryVariant
+                        backgroundColor = MaterialTheme.colors.secondary,
+                        contentColor = Color.Black
                     ),
                     onClick = {
 
