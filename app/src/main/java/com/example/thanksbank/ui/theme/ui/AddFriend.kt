@@ -30,7 +30,7 @@ import com.example.thanksbank.ui.theme.ThanksBankTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun AddFriendContent() {
+fun AddFriendContent(toFriendList: () -> Unit) {
     ThanksBankTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -64,11 +64,12 @@ fun AddFriendContent() {
                 Button(
                     modifier = Modifier
                         .padding(top = 30.dp)
-                        .size(100.dp,50.dp),
-                    onClick = { /*TODO*/ }) {
+                        .size(100.dp, 50.dp),
+                    onClick = { toFriendList() }) {
                     Text(
                         color = MaterialTheme.colors.secondary,
-                        text = stringResource(id = R.string.button_save_friend_name))
+                        text = stringResource(id = R.string.button_save_friend_name)
+                    )
                 }
             }
         }
@@ -84,7 +85,9 @@ fun PreviewAddFriend() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.secondary
         ) {
-            AddFriendContent()
+            AddFriendContent {
+
+            }
         }
     }
 }
