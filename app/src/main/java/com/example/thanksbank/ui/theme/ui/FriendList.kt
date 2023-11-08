@@ -26,7 +26,7 @@ import kotlin.math.min
 
 
 @Composable
-fun FriendListContent(toAddFriend: () -> Unit) {
+fun FriendListContent(toAddFriend: () -> Unit, toThanksList: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.primary
@@ -48,19 +48,19 @@ fun FriendListContent(toAddFriend: () -> Unit) {
             ) {
                 Text(text = stringResource(id = R.string.button_add_friend))
             }
-            FriendList(progress = 50)
+            FriendList(progress = 50, onItemClick = toThanksList)
         }
     }
 }
 
 @Composable
-fun FriendList(progress: Int) {
+fun FriendList(progress: Int, onItemClick: () -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         content = {
             items(progress) {
                 FriendListItem(progress = 50) {
-                    //TODO
+                    onItemClick()
                 }
             }
         }
@@ -165,7 +165,7 @@ fun PreviewFriendList() {
                 ) {
                     Text(text = stringResource(id = R.string.button_add_friend))
                 }
-                FriendList(progress = 50)
+                FriendList(progress = 50){}
             }
         }
     }
