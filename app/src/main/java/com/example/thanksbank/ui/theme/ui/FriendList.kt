@@ -144,29 +144,7 @@ fun CircleProgress(
 @Preview(showBackground = true)
 fun PreviewFriendList() {
     ThanksBankTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.primary
-        ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.End
-            ) {
-                Button(
-                    modifier = Modifier
-                        .padding(top = 16.dp, end = 16.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colors.secondary,
-                        contentColor = Color.Black
-                    ),
-                    onClick = {
-
-                    }
-                ) {
-                    Text(text = stringResource(id = R.string.button_add_friend))
-                }
-                FriendList(progress = 50){}
-            }
-        }
+     FriendListContent(toAddFriend = { /*TODO*/ }) {
+     }
     }
 }

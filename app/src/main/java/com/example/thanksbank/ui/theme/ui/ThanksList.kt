@@ -27,12 +27,12 @@ import com.example.thanksbank.ui.theme.ThanksBankTheme
 data class FriendsData(val date: String, val msg: String)
 
 @Composable
-fun ThanksListContent() {
+fun ThanksListContent(toAddThanks: () -> Unit) {
     Scaffold(
         backgroundColor = MaterialTheme.colors.primary,
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* アクションを設定 */ }
+                onClick = { toAddThanks() }
             ) {
                 Icon(Icons.Filled.Edit, contentDescription = "変更")
             }
@@ -103,8 +103,8 @@ fun ThanksListItem(friendList: FriendsData) {
 
 @Preview
 @Composable
-fun PreviewThanksListContent() {
+fun PreviewThanksList() {
     ThanksBankTheme {
-        ThanksListContent()
+        ThanksListContent{}
     }
 }

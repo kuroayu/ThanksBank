@@ -76,8 +76,17 @@ fun AppScreenUI() {
                     navController.navigateUp()
                 }
             }
-            composable("ThanksList"){
-                ThanksListContent()
+            composable("ThanksList") {
+                ThanksListContent(
+                    toAddThanks = {
+                        navController.navigate("AddThanks")
+                    }
+                )
+            }
+            composable("AddThanks") {
+                AddThanksContent {
+                    navController.navigateUp()
+                }
             }
         }
     }
