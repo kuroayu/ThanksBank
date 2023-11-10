@@ -41,12 +41,6 @@ fun ThanksListContent(toAddThanks: () -> Unit) {
         Column(
             modifier = Modifier.padding(it)
         ) {
-            Text(
-                modifier = Modifier
-                    .padding(5.dp),
-                color = MaterialTheme.colors.onSecondary,
-                text = "Mount Rainer"
-            )
             ThanksList()
         }
     }
