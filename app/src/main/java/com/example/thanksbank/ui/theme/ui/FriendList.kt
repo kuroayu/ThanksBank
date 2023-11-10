@@ -26,30 +26,12 @@ import kotlin.math.min
 
 
 @Composable
-fun FriendListContent(toAddFriend: () -> Unit, toThanksList: () -> Unit) {
+fun FriendListContent(toThanksList: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.primary
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.End
-        ) {
-            Button(
-                modifier = Modifier
-                    .padding(top = 16.dp, end = 16.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colors.secondary,
-                    contentColor = MaterialTheme.colors.onSecondary
-                ),
-                onClick = {
-                    toAddFriend()
-                }
-            ) {
-                Text(text = stringResource(id = R.string.button_add_friend))
-            }
-            FriendList(progress = 50, onItemClick = toThanksList)
-        }
+        FriendList(progress = 50, onItemClick = toThanksList)
     }
 }
 
@@ -144,7 +126,7 @@ fun CircleProgress(
 @Preview(showBackground = true)
 fun PreviewFriendList() {
     ThanksBankTheme {
-     FriendListContent(toAddFriend = { /*TODO*/ }) {
-     }
+        FriendListContent() {
+        }
     }
 }
