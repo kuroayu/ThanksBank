@@ -25,12 +25,15 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.thanksbank.R
-import com.example.thanksbank.ui.theme.ThanksBankTheme
+import com.example.thanksbank.ui.theme.theme.ThanksBankTheme
 
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun AddFriendContent(toFriendList: () -> Unit) {
+fun AddFriendContent(
+    toFriendList: () -> Unit,
+    viewModel: AddFriendViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+) {
     ThanksBankTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -85,9 +88,7 @@ fun PreviewAddFriend() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.secondary
         ) {
-            AddFriendContent {
-
-            }
+            AddFriendContent(toFriendList = {})
         }
     }
 }

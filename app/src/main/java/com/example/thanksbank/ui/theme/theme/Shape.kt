@@ -1,4 +1,4 @@
-package com.example.thanksbank.ui.theme
+package com.example.thanksbank.ui.theme.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

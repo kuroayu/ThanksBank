@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.thanksbank.ui.theme.ThanksBankTheme
+import com.example.thanksbank.ui.theme.theme.ThanksBankTheme
 
 data class FriendsData(val date: String, val msg: String)
 
