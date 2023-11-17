@@ -5,5 +5,8 @@ import androidx.room.*
 @Dao
 interface FriendDao {
     @Insert
-    suspend fun insert(friendData:FriendUiState)
+    suspend fun insertFriendData(friendData:FriendUiState)
+
+    @Query("SELECT * FROM friend ORDER BY friendName")
+    suspend fun getFriendData():List<FriendUiState>
 }

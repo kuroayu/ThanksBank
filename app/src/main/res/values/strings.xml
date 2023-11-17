@@ -3,5 +3,6 @@
 
     <string name="button_add_friend">友達追加</string>
     <string name="button_save_friend_name">保存</string>
+    <string name="label_input_friend_name">FriendName(10文字以内)</string>
     <string name="title_activity_add_friend">AddFriendActivity</string>
 </resources>

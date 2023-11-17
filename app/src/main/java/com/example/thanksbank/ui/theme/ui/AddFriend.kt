@@ -1,6 +1,7 @@
 package com.example.thanksbank.ui.theme.ui
 
 
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,21 +25,28 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.thanksbank.R
+import com.example.thanksbank.ui.theme.ThanksBankApplication
+import com.example.thanksbank.ui.theme.model.FriendUiState
 import com.example.thanksbank.ui.theme.theme.ThanksBankTheme
 
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AddFriendContent(
-    toFriendList: () -> Unit,
-    viewModel: AddFriendViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    toFriendList: () -> Unit
 ) {
     ThanksBankTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.secondary
         ) {
+            val addFriendViewModel = viewModel() {
+                val application = get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY) as ThanksBankApplication
+                AddFriendViewModel(application.friendRepository)
+            }
             val textState = remember { mutableStateOf(TextFieldValue()) }
             val keyboardController = LocalSoftwareKeyboardController.current
             Column(
@@ -54,7 +62,7 @@ fun AddFriendContent(
                             textState.value = it
                         }
                     },
-                    label = { Text("FriendName(10文字以内)") },
+                    label = { Text(stringResource(id = R.string.label_input_friend_name)) },
                     keyboardOptions = KeyboardOptions.Default.copy(
                         imeAction = ImeAction.Done
                     ),
@@ -68,7 +76,16 @@ fun AddFriendContent(
                     modifier = Modifier
                         .padding(top = 30.dp)
                         .size(100.dp, 50.dp),
-                    onClick = { toFriendList() }) {
+                    onClick = {
+                        addFriendViewModel.insertFriendName(
+                            FriendUiState(
+                                friendName = textState.value.text,
+                                totalThanksPoint = 0
+                            )
+                        )
+                        toFriendList()
+                    }
+                ) {
                     Text(
                         color = MaterialTheme.colors.secondary,
                         text = stringResource(id = R.string.button_save_friend_name)
