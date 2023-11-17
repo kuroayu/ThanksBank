@@ -1,7 +1,6 @@
 package com.example.thanksbank.ui.theme.model
 
-import androidx.room.Dao
-import androidx.room.Insert
+import androidx.room.*
 
 @Dao
 interface FriendDao {

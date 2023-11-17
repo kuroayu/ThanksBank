@@ -70,9 +70,8 @@ dependencies {
     //RunTime
     implementation "androidx.compose.runtime:runtime-livedata:1.0.5"
     //Room
-    //Room
-    implementation "androidx.room:room-ktx:2.4.2"
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    kapt "androidx.room:room-compiler:2.4.2"
-    androidTestImplementation "androidx.room:room-testing:2.4.2"
+    implementation "androidx.room:room-runtime:2.5.0"
+    implementation 'androidx.room:room-ktx:2.5.0'
+    kapt 'androidx.room:room-compiler:2.5.0'
+
 }

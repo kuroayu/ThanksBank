@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "friend")
 data class FriendUiState(
     @PrimaryKey(autoGenerate = true)
-    val id:Int,
+    val id:Int = 0,
     val friendName:String,
     val totalThanksPoint:Int
 )
