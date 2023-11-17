@@ -19,6 +19,9 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.thanksbank.ui.theme.ThanksBankApplication
 import com.example.thanksbank.ui.theme.theme.ThanksBankTheme
 import kotlin.math.min
 
@@ -29,17 +32,21 @@ fun FriendListContent(toThanksList: () -> Unit) {
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.primary
     ) {
-        FriendList(progress = 50, onItemClick = toThanksList)
+        val friendListViewModel = viewModel() {
+            val application = get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY) as ThanksBankApplication
+            FriendListViewModel(application.friendRepository)
+        }
+        FriendList(friendListViewModel,progress = 50, onItemClick = toThanksList)
     }
 }
 
 @Composable
-fun FriendList(progress: Int, onItemClick: () -> Unit) {
+fun FriendList(friendListViewModel: FriendListViewModel,progress: Int, onItemClick: () -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         content = {
             items(progress) {
-                FriendListItem(progress = 50) {
+                FriendListItem(friendListViewModel,progress = 50) {
                     onItemClick()
                 }
             }
@@ -48,7 +55,10 @@ fun FriendList(progress: Int, onItemClick: () -> Unit) {
 }
 
 @Composable
-fun FriendListItem(progress: Int, onItemClick: () -> Unit) {
+fun FriendListItem(friendListViewModel: FriendListViewModel,progress: Int, onItemClick: () -> Unit) {
+
+    val friendData = friendListViewModel.getFriendData()
+
     Box(
         modifier = Modifier
             .padding(10.dp)
@@ -76,6 +86,7 @@ fun FriendListItem(progress: Int, onItemClick: () -> Unit) {
             contentAlignment = Alignment.Center
         ) {
             CircleProgress(progress, Modifier.size(120.dp))
+
         }
     }
 }
