@@ -8,6 +8,6 @@ import androidx.room.PrimaryKey
 data class FriendUiState(
     @PrimaryKey(autoGenerate = true)
     val id:Int = 0,
-    val friendName:String,
-    val totalThanksPoint:Int
+    val friendName:String ="",
+    val totalThanksPoint:Int = 0
 )

@@ -6,9 +6,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -22,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.thanksbank.ui.theme.ThanksBankApplication
+import com.example.thanksbank.ui.theme.model.FriendUiState
 import com.example.thanksbank.ui.theme.theme.ThanksBankTheme
 import kotlin.math.min
 
@@ -33,20 +37,25 @@ fun FriendListContent(toThanksList: () -> Unit) {
         color = MaterialTheme.colors.primary
     ) {
         val friendListViewModel = viewModel() {
-            val application = get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY) as ThanksBankApplication
+            val application =
+                get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY) as ThanksBankApplication
             FriendListViewModel(application.friendRepository)
         }
-        FriendList(friendListViewModel,progress = 50, onItemClick = toThanksList)
+        friendListViewModel.init()
+        FriendList(friendListViewModel,onItemClick = toThanksList)
     }
 }
 
 @Composable
-fun FriendList(friendListViewModel: FriendListViewModel,progress: Int, onItemClick: () -> Unit) {
+fun FriendList(friendListViewModel: FriendListViewModel, onItemClick: () -> Unit) {
+    val friendData by friendListViewModel.friendData.collectAsState()
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         content = {
-            items(progress) {
-                FriendListItem(friendListViewModel,progress = 50) {
+            items(friendData) { data ->
+                FriendListItem(
+                    friendData = data
+                ) {
                     onItemClick()
                 }
             }
@@ -55,9 +64,7 @@ fun FriendList(friendListViewModel: FriendListViewModel,progress: Int, onItemCli
 }
 
 @Composable
-fun FriendListItem(friendListViewModel: FriendListViewModel,progress: Int, onItemClick: () -> Unit) {
-
-    val friendData = friendListViewModel.getFriendData()
+fun FriendListItem(friendData: FriendUiState, onItemClick: () -> Unit) {
 
     Box(
         modifier = Modifier
@@ -75,7 +82,7 @@ fun FriendListItem(friendListViewModel: FriendListViewModel,progress: Int, onIte
             horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = "Mount Rainer",
+                text = friendData.friendName,
                 color = MaterialTheme.colors.onSecondary
             )
         }
@@ -85,8 +92,7 @@ fun FriendListItem(friendListViewModel: FriendListViewModel,progress: Int, onIte
                 .padding(top = 30.dp, bottom = 10.dp),
             contentAlignment = Alignment.Center
         ) {
-            CircleProgress(progress, Modifier.size(120.dp))
-
+            CircleProgress(friendData.totalThanksPoint, Modifier.size(120.dp))
         }
     }
 }

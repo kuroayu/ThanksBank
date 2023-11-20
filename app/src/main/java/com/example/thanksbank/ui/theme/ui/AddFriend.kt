@@ -1,7 +1,6 @@
 package com.example.thanksbank.ui.theme.ui
 
 
-
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,15 +13,16 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
@@ -44,10 +44,13 @@ fun AddFriendContent(
             color = MaterialTheme.colors.secondary
         ) {
             val addFriendViewModel = viewModel() {
-                val application = get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY) as ThanksBankApplication
+                val application =
+                    get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY) as ThanksBankApplication
                 AddFriendViewModel(application.friendRepository)
             }
-            val textState = remember { mutableStateOf(TextFieldValue()) }
+            var textState by rememberSaveable {
+                mutableStateOf("")
+            }
             val keyboardController = LocalSoftwareKeyboardController.current
             Column(
                 modifier = Modifier
@@ -56,10 +59,10 @@ fun AddFriendContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 OutlinedTextField(
-                    value = textState.value,
+                    value = textState,
                     onValueChange = {
-                        if (it.text.length <= 10) {
-                            textState.value = it
+                        if (textState.length <= 10) {
+                            textState = it
                         }
                     },
                     label = { Text(stringResource(id = R.string.label_input_friend_name)) },
@@ -79,7 +82,7 @@ fun AddFriendContent(
                     onClick = {
                         addFriendViewModel.insertFriendName(
                             FriendUiState(
-                                friendName = textState.value.text,
+                                friendName = textState,
                                 totalThanksPoint = 0
                             )
                         )
