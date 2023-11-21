@@ -1,6 +1,7 @@
 package com.example.thanksbank.ui.theme.ui
 
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,7 +28,8 @@ import com.example.thanksbank.ui.theme.theme.ThanksBankTheme
 data class FriendsData(val date: String, val msg: String)
 
 @Composable
-fun ThanksListContent(toAddThanks: () -> Unit) {
+fun ThanksListContent(toAddThanks: () -> Unit, friendId: Int?) {
+    
     Scaffold(
         backgroundColor = MaterialTheme.colors.primary,
         floatingActionButton = {
@@ -99,6 +101,6 @@ fun ThanksListItem(friendList: FriendsData) {
 @Composable
 fun PreviewThanksList() {
     ThanksBankTheme {
-        ThanksListContent{}
+       // ThanksListContent({}, backStackEntry.arguments?.getString("userId"))
     }
 }

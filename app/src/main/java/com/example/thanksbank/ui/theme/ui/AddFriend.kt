@@ -43,7 +43,7 @@ fun AddFriendContent(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.secondary
         ) {
-            val addFriendViewModel = viewModel() {
+            val addFriendViewModel = viewModel {
                 val application =
                     get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY) as ThanksBankApplication
                 AddFriendViewModel(application.friendRepository)

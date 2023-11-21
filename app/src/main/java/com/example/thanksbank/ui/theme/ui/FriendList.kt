@@ -31,7 +31,7 @@ import kotlin.math.min
 
 
 @Composable
-fun FriendListContent(toThanksList: () -> Unit) {
+fun FriendListContent(toThanksList: (Int?) -> Unit) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.primary
@@ -42,12 +42,18 @@ fun FriendListContent(toThanksList: () -> Unit) {
             FriendListViewModel(application.friendRepository)
         }
         friendListViewModel.init()
-        FriendList(friendListViewModel,onItemClick = toThanksList)
+        FriendList(friendListViewModel, onItemClick = { friendId ->
+            toThanksList(friendId)
+        }
+        )
     }
 }
 
 @Composable
-fun FriendList(friendListViewModel: FriendListViewModel, onItemClick: () -> Unit) {
+fun FriendList(
+    friendListViewModel: FriendListViewModel,
+    onItemClick: (Int) -> Unit
+) {
     val friendData by friendListViewModel.friendData.collectAsState()
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -56,7 +62,7 @@ fun FriendList(friendListViewModel: FriendListViewModel, onItemClick: () -> Unit
                 FriendListItem(
                     friendData = data
                 ) {
-                    onItemClick()
+                    onItemClick(data.id)
                 }
             }
         }
@@ -141,7 +147,7 @@ fun CircleProgress(
 @Preview(showBackground = true)
 fun PreviewFriendList() {
     ThanksBankTheme {
-        FriendListContent() {
+        FriendListContent {
         }
     }
 }

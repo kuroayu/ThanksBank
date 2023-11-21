@@ -23,12 +23,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.thanksbank.R
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -65,23 +66,27 @@ fun AppScreen() {
             navController = navController,
             startDestination = "FriendList"
         ) {
-            composable("FriendList") {
-                FriendListContent(
-                    toThanksList = {
-                        navController.navigate("ThanksList")
-                    }
-                )
+            composable(
+                "FriendList"
+            ) {
+                FriendListContent { friendId ->
+                    navController.navigate("ThanksList/$friendId")
+                }
             }
             composable("AddFriend") {
                 AddFriendContent{
                     navController.navigateUp()
                 }
             }
-            composable("ThanksList") {
+            composable(
+                "ThanksList/{friendId}",
+                listOf(navArgument("friendId") { type = NavType.IntType })
+            ) { backStackEntry ->
                 ThanksListContent(
                     toAddThanks = {
                         navController.navigate("AddThanks")
-                    }
+                    },
+                    backStackEntry.arguments?.getInt("friendId")
                 )
             }
             composable("AddThanks") {
