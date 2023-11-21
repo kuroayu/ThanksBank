@@ -23,13 +23,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.thanksbank.ui.theme.ThanksBankApplication
 import com.example.thanksbank.ui.theme.theme.ThanksBankTheme
 
 data class FriendsData(val date: String, val msg: String)
 
 @Composable
 fun ThanksListContent(toAddThanks: () -> Unit, friendId: Int?) {
-    
+    val friendListViewModel = viewModel() {
+        val application =
+            get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY) as ThanksBankApplication
+        ThanksListViewModel(application.friendRepository)
+    }
+
     Scaffold(
         backgroundColor = MaterialTheme.colors.primary,
         floatingActionButton = {
