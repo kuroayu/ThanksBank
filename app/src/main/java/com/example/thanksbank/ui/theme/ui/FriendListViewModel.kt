@@ -10,12 +10,12 @@ import kotlinx.coroutines.launch
 
 class FriendListViewModel(private val friendRepository: FriendRepository):ViewModel() {
 
-    private val _friendData: MutableStateFlow<List<FriendUiState>> = MutableStateFlow(emptyList())
-    val friendData:StateFlow<List<FriendUiState>> = _friendData
+    private val _allFriendData: MutableStateFlow<List<FriendUiState>> = MutableStateFlow(emptyList())
+    val allFriendData:StateFlow<List<FriendUiState>> = _allFriendData
 
     fun init() {
         viewModelScope.launch {
-            _friendData.value = friendRepository.getFriendData()
+            _allFriendData.value = friendRepository.getAllFriendData()
         }
     }
 }

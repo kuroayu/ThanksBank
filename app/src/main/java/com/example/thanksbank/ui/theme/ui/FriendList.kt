@@ -54,7 +54,7 @@ fun FriendList(
     friendListViewModel: FriendListViewModel,
     onItemClick: (Int) -> Unit
 ) {
-    val friendData by friendListViewModel.friendData.collectAsState()
+    val friendData by friendListViewModel.allFriendData.collectAsState()
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         content = {

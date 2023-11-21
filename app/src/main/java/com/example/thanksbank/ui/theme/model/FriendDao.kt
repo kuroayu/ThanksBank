@@ -1,6 +1,7 @@
 package com.example.thanksbank.ui.theme.model
 
 import androidx.room.*
+import com.example.thanksbank.ui.theme.ui.FriendsData
 
 @Dao
 interface FriendDao {
@@ -8,5 +9,7 @@ interface FriendDao {
     suspend fun insertFriendData(friendData:FriendUiState)
 
     @Query("SELECT * FROM friend ORDER BY friendName")
-    suspend fun getFriendData():List<FriendUiState>
+    suspend fun getAllFriendData():List<FriendUiState>
+    @Query("SELECT * FROM friend WHERE id == (:id) ")
+    suspend fun getFriendData(id:Int):FriendUiState
 }

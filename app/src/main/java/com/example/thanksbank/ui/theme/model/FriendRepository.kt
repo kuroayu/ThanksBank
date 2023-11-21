@@ -2,11 +2,15 @@ package com.example.thanksbank.ui.theme.model
 
 class FriendRepository(private val friendDao: FriendDao) {
 
-     suspend fun insertFriendData(friendData: FriendUiState) {
+    suspend fun insertFriendData(friendData: FriendUiState) {
         friendDao.insertFriendData(friendData)
     }
 
-    suspend fun getFriendData():List<FriendUiState>{
-        return friendDao.getFriendData()
+    suspend fun getAllFriendData(): List<FriendUiState> {
+        return friendDao.getAllFriendData()
+    }
+
+    suspend fun getFriendData(id:Int): FriendUiState {
+        return friendDao.getFriendData(id)
     }
 }
