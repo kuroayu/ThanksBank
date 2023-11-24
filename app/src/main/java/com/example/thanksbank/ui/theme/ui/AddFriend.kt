@@ -1,6 +1,5 @@
 package com.example.thanksbank.ui.theme.ui
 
-
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -83,7 +82,8 @@ fun AddFriendContent(
                         addFriendViewModel.insertFriendName(
                             FriendUiState(
                                 friendName = textState,
-                                totalThanksPoint = 0
+                                totalThanksPoint = 0,
+                                message = ""
                             )
                         )
                         toFriendList()

@@ -1,7 +1,6 @@
 package com.example.thanksbank.ui.theme.ui
 
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,10 +31,14 @@ data class FriendsData(val date: String, val msg: String)
 
 @Composable
 fun ThanksListContent(toAddThanks: () -> Unit, friendId: Int?) {
-    val friendListViewModel = viewModel() {
+    val thanksListViewModel = viewModel{
         val application =
             get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY) as ThanksBankApplication
         ThanksListViewModel(application.friendRepository)
+    }
+
+    if (friendId != null) {
+        thanksListViewModel.init(friendId)
     }
 
     Scaffold(
@@ -51,14 +54,14 @@ fun ThanksListContent(toAddThanks: () -> Unit, friendId: Int?) {
         Column(
             modifier = Modifier.padding(it)
         ) {
-            ThanksList()
+            ThanksList(thanksListViewModel)
         }
     }
 }
 
 
 @Composable
-fun ThanksList() {
+fun ThanksList(viewModel: ThanksListViewModel) {
     val friendListData = listOf(
         FriendsData(
             "2023.09.09",

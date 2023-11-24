@@ -14,7 +14,8 @@ class AddFriendViewModel(private val friendRepository: FriendRepository) : ViewM
                 friendRepository.insertFriendData(
                     FriendUiState(
                         friendName = friendData.friendName,
-                        totalThanksPoint = friendData.totalThanksPoint
+                        totalThanksPoint = friendData.totalThanksPoint,
+                        message = ""
                     )
                 )
             }.onFailure {
