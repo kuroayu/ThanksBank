@@ -18,6 +18,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,16 +27,19 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.thanksbank.ui.theme.ThanksBankApplication
+import com.example.thanksbank.ui.theme.model.ThanksUiState
 import com.example.thanksbank.ui.theme.theme.ThanksBankTheme
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-data class FriendsData(val date: String, val msg: String)
 
 @Composable
 fun ThanksListContent(toAddThanks: () -> Unit, friendId: Int?) {
-    val thanksListViewModel = viewModel{
+    val thanksListViewModel = viewModel {
         val application =
             get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY) as ThanksBankApplication
-        ThanksListViewModel(application.friendRepository)
+        ThanksListViewModel(application.thanksRepository)
     }
 
     if (friendId != null) {
@@ -59,27 +64,23 @@ fun ThanksListContent(toAddThanks: () -> Unit, friendId: Int?) {
     }
 }
 
-
 @Composable
-fun ThanksList(viewModel: ThanksListViewModel) {
-    val friendListData = listOf(
-        FriendsData(
-            "2023.09.09",
-            "Thanks！Thanks！Thanks！Thanks！Thanks！Thanks！Thanks！Thanks！Thanks！Thanks！Thanks！"
-        ),
-        FriendsData(
-            "2023.10.10", "Another message"
-        )
-    )
-    LazyColumn {
-        items(friendListData) { item ->
-            ThanksListItem(item)
+fun ThanksList(thanksListViewModel: ThanksListViewModel) {
+    val thanksData by thanksListViewModel.thanksData.collectAsState()
+    LazyColumn(
+        content = {
+            items(thanksData) { data ->
+                ThanksListItem(
+                    friendData = data
+                )
+            }
         }
-    }
+    )
 }
 
+//ここスペーサー抜いて上のマージン見ればすっきりしそう
 @Composable
-fun ThanksListItem(friendList: FriendsData) {
+fun ThanksListItem(friendData: ThanksUiState) {
     Column(
         modifier = Modifier
             .padding(3.dp)
@@ -91,14 +92,14 @@ fun ThanksListItem(friendList: FriendsData) {
             modifier = Modifier
                 .padding(start = 5.dp),
             color = MaterialTheme.colors.onSecondary,
-            text = friendList.date
+            text = dateConverter(friendData.date)
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             modifier = Modifier
                 .padding(start = 10.dp),
             color = MaterialTheme.colors.onSecondary,
-            text = friendList.msg,
+            text = friendData.message,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
@@ -106,11 +107,18 @@ fun ThanksListItem(friendList: FriendsData) {
     }
 }
 
+fun dateConverter(date: Long): String {
+    val convertedDate = Date(date)
+
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.JAPAN)
+    return dateFormat.format(convertedDate)
+}
+
 
 @Preview
 @Composable
 fun PreviewThanksList() {
     ThanksBankTheme {
-       // ThanksListContent({}, backStackEntry.arguments?.getString("userId"))
+        // ThanksListContent({}, backStackEntry.arguments?.getString("userId"))
     }
 }

@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [FriendUiState::class], version = 1, exportSchema = false)
+@Database(entities = [FriendUiState::class,ThanksUiState::class], version = 1, exportSchema = false)
 abstract class ThanksBankDatabase : RoomDatabase() {
-    abstract fun friendDao(): FriendDao
+    abstract fun friendDao(): ThanksBankDao
 
     companion object {
         private var INSTANCE: ThanksBankDatabase? = null
