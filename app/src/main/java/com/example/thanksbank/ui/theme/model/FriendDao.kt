@@ -10,6 +10,6 @@ interface FriendDao {
 
     @Query("SELECT * FROM friend ORDER BY friendName")
     suspend fun getAllFriendData():List<FriendUiState>
-    @Query("SELECT * FROM friend WHERE id == (:id) ORDER BY message")
+    @Query("SELECT * FROM friend WHERE id == (:id) ORDER BY friendName")
     suspend fun getFriendData(id:Int):FriendUiState
 }

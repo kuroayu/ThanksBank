@@ -28,7 +28,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.thanksbank.R
 import com.example.thanksbank.ui.theme.ThanksBankApplication
-import com.example.thanksbank.ui.theme.model.FriendUiState
 import com.example.thanksbank.ui.theme.theme.ThanksBankTheme
 
 
@@ -47,7 +46,7 @@ fun AddFriendContent(
                     get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY) as ThanksBankApplication
                 AddFriendViewModel(application.friendRepository)
             }
-            var textState by rememberSaveable {
+            var friendName by rememberSaveable {
                 mutableStateOf("")
             }
             val keyboardController = LocalSoftwareKeyboardController.current
@@ -58,10 +57,10 @@ fun AddFriendContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 OutlinedTextField(
-                    value = textState,
+                    value = friendName,
                     onValueChange = {
-                        if (textState.length <= 10) {
-                            textState = it
+                        if (friendName.length <= 10) {
+                            friendName = it
                         }
                     },
                     label = { Text(stringResource(id = R.string.label_input_friend_name)) },
@@ -80,11 +79,7 @@ fun AddFriendContent(
                         .size(100.dp, 50.dp),
                     onClick = {
                         addFriendViewModel.insertFriendName(
-                            FriendUiState(
-                                friendName = textState,
-                                totalThanksPoint = 0,
-                                message = ""
-                            )
+                            friendName
                         )
                         toFriendList()
                     }

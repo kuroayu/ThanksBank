@@ -8,14 +8,15 @@ import kotlinx.coroutines.launch
 
 class AddFriendViewModel(private val friendRepository: FriendRepository) : ViewModel() {
 
-    fun insertFriendName(friendData: FriendUiState) {
+    fun insertFriendName(friendName: String) {
+        val dateNow = System.currentTimeMillis()
         viewModelScope.launch {
             runCatching {
                 friendRepository.insertFriendData(
                     FriendUiState(
-                        friendName = friendData.friendName,
-                        totalThanksPoint = friendData.totalThanksPoint,
-                        message = ""
+                        friendName = friendName,
+                        createAt = dateNow,
+                        totalThanksPoint = 0
                     )
                 )
             }.onFailure {
