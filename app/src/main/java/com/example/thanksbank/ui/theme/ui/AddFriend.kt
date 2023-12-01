@@ -78,7 +78,7 @@ fun AddFriendContent(
                         .padding(top = 30.dp)
                         .size(100.dp, 50.dp),
                     onClick = {
-                        addFriendViewModel.insertFriendName(
+                        addFriendViewModel.insertFriendData(
                             friendName
                         )
                         toFriendList()

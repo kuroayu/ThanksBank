@@ -7,6 +7,9 @@ interface ThanksBankDao {
     @Insert
     suspend fun insertFriendData(friendData: FriendUiState)
 
+    @Insert
+    suspend fun insertThanksData(thanksData: ThanksUiState)
+
     @Query("SELECT * FROM friend ORDER BY friendName")
     suspend fun getAllFriendData(): List<FriendUiState>
 
