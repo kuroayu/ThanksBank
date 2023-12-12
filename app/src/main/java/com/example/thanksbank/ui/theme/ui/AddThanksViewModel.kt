@@ -10,9 +10,9 @@ class AddThanksViewModel(private val thanksRepository: ThanksRepository):ViewMod
     fun insertThanksData(){
         viewModelScope.launch {
             runCatching {
-                thanksRepository.insertThanksData(
-                    //TODO
-                )
+//                thanksRepository.insertThanksData(
+//                    //TODO
+//                )
             }.onFailure {
                 //TODO
             }
